@@ -45,18 +45,20 @@
         <ion-item>
           <ion-label>Country</ion-label>
           <ion-select [(ngModel)]="newOrder.billing_address.country">
-            <ion-option value="India" selected="true">India</ion-option>
+            <ion-option value="IN" selected="true">India</ion-option>
+            <ion-option value="Us">Us</ion-option>
+            <ion-option value="Uk">Uk</ion-option>
           </ion-select>
         </ion-item>
   
         <ion-item>
           <ion-label>State</ion-label>
           <ion-select [(ngModel)]="newOrder.billing_address.state">
-            <ion-option value="New Delhi">New Delhi</ion-option>
+            <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
             <ion-option value="Uttar Pradesh">Uttar Pradesh</ion-option>
             <ion-option value="Maharashtra">Maharashtra</ion-option>
-            <ion-option value="Tamil Nadu">Tamil Nadu</ion-option>
-            <ion-option value="Madhya Pradesh">Madhya Pradesh</ion-option>
+            <ion-option value="West Bengal">West Bengal</ion-option>
+            <ion-option value="Tamilnadu">Tamilnadu</ion-option>
           </ion-select>
         </ion-item>
   
@@ -105,18 +107,20 @@
         <ion-item *ngIf="!billing_shipping_same">
           <ion-label>Country</ion-label>
           <ion-select [(ngModel)]="newOrder.shipping_address.country">
-            <ion-option value="India" selected="true">India</ion-option>
+            <ion-option value="IN" selected="true">India</ion-option>
+            <ion-option value="Us">Us</ion-option>
+            <ion-option value="Uk">Uk</ion-option>
           </ion-select>
         </ion-item>
   
         <ion-item *ngIf="!billing_shipping_same">
           <ion-label>State</ion-label>
           <ion-select [(ngModel)]="newOrder.shipping_address.state">
-            <ion-option value="New Delhi">New Delhi</ion-option>
+            <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
             <ion-option value="Uttar Pradesh">Uttar Pradesh</ion-option>
             <ion-option value="Maharashtra">Maharashtra</ion-option>
-            <ion-option value="Tamil Nadu">Tamil Nadu</ion-option>
-            <ion-option value="Madhya Pradesh">Madhya Pradesh</ion-option>
+            <ion-option value="West Bengal">West Bengal</ion-option>
+            <ion-option value="Tamilnadu">Tamilnadu</ion-option>
           </ion-select>
         </ion-item>
   
