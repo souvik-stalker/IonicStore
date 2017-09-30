@@ -1,0 +1,57 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="card-background-page">
+    <ion-card no-padding>
+      <img src="./assets/images/rock.png" />
+      <div class="card-title">Vik Store</div>
+      <div class="card-subtitle">Keep Exploring</div>
+    </ion-card>
+
+    <ion-list>
+      <ion-item (click)="backToHome();" menuClose>
+        <ion-icon name="home" item-left large></ion-icon>
+        <h2>Home</h2>
+        <p>Go to Store Home Page</p>
+      </ion-item>
+      <ion-item *ngFor="let category of categories" text-wrap (click)="openCategoryPage(category)" menuClose>
+        <ion-icon [name]="category.icon" item-left large></ion-icon>
+        <h2>{{category.name}}</h2>
+        <p>{{category.description}}</p>
+      </ion-item>
+      <ion-item-divider color="danger">Account</ion-item-divider>
+      <ion-item (click)="openPage('signup');" menuClose *ngIf="!loggedIn">
+        <ion-icon name="md-clipboard" item-left large></ion-icon>
+        <h2>Sign up</h2>
+        <p>Create New Account</p>
+      </ion-item>
+      <ion-item (click)="openPage('login');" menuClose *ngIf="!loggedIn">
+        <ion-icon name="log-in" item-left large></ion-icon>
+        <h2>Login</h2>
+        <p>Using Email & Password</p>
+      </ion-item>
+      <ion-item  menuClose *ngIf="loggedIn">
+        <ion-icon name="contact" item-left large></ion-icon>
+        <h2>{{(this.user.firstname =='' ? this.user.firstname: this.user.firstname) || ''}}</h2>
+        <p>Welcome</p>
+      </ion-item>
+      <ion-item (click)="openPage('cart');" menuClose *ngIf="loggedIn">
+        <ion-icon name="cart" item-left large></ion-icon>
+        <h2>Your Cart</h2>
+        <p>Check items in your cart</p>
+      </ion-item>
+      <ion-item (click)="openPage('logout');" menuClose *ngIf="loggedIn">
+        <ion-icon name="log-out" item-left large></ion-icon>
+        <h2>Logout</h2>
+        <p>of your account</p>
+      </ion-item>
+    
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+<ion-nav #content [root]="HomePage"></ion-nav>
