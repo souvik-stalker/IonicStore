@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController } from 'ionic-angular';
 import * as WC from 'woocommerce-api';
 import { Storage } from '@ionic/storage';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
@@ -13,7 +14,11 @@ export class CheckoutPage {
   paymentMethod: any;
   billing_shipping_same: boolean;
   userInfo: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public storage:Storage,
+              public alertCtrl:AlertController,
+              private payPal: PayPal) {
     this.newOrder = {};
     this.newOrder.billing_address = {};
     this.newOrder.shipping_address = {};
@@ -79,7 +84,65 @@ export class CheckoutPage {
     };
 
     if(paymentData.method_id=='paypal'){
-      //TODO
+      this.payPal.init({
+        PayPalEnvironmentProduction: "YOUR_PRODUCTION_CLIENT_ID",
+        PayPalEnvironmentSandbox: "AYkkS2ObeSpaObaCqA3bybQjRNRMKOw_2vNSha7gmxESpG4l4AhEyMfYwuzrUFKSbWGhCsN-Vhtl5FOG"
+      }).then(() => {
+        // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+        this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+          // Only needed if you get an "Internal Service Error" after PayPal login!
+          //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+        })).then(() => {
+
+          this.storage.get("cart").then((cart) => {
+
+            let total = 0.00;
+            cart.forEach((element, index) => {
+              orderItems.push({ product_id: element.product.id, quantity: element.qty });
+              total = total + (element.product.price * element.qty);
+            });
+
+            let payment = new PayPalPayment(total.toString(), 'USD', 'Description', 'sale');
+            this.payPal.renderSinglePaymentUI(payment).then((response) => {
+              // Successfully paid
+
+              alert(JSON.stringify(response));
+
+
+              data.line_items = orderItems;
+              //console.log(data);
+              let orderData: any = {};
+
+              orderData.order = data;
+
+              this.WooCommerce.postAsync('orders', orderData).then((data) => {
+                alert("Order placed successfully!");
+
+                let response = (JSON.parse(data.body).order);
+
+                this.alertCtrl.create({
+                  title: "Order Placed Successfully",
+                  message: "Your order has been placed successfully. Your order number is " + response.order_number,
+                  buttons: [{
+                    text: "OK",
+                    handler: () => {
+                      this.navCtrl.push('HomePage');
+                    }
+                  }]
+                }).present();
+              })
+
+            })
+
+          }, () => {
+            // Error or render dialog closed without being successful
+          });
+        }, () => {
+          // Error in configuration
+        });
+      }, () => {
+        // Error in initialization, maybe PayPal isn't supported or something else
+      });
     }
     else{
       this.storage.get('cart').then((cart)=>{

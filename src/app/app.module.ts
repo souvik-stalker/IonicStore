@@ -15,6 +15,8 @@ import { SignupPage } from "../pages/signup/signup";
 import { LoginPage } from "../pages/login/login";
 import { HttpModule } from '@angular/http';
 import { CheckoutPage } from "../pages/checkout/checkout";
+import { PayPal } from '@ionic-native/paypal';
+import { OneSignal } from '@ionic-native/onesignal';
 @NgModule({
   declarations: [
     MyApp,
@@ -48,6 +50,8 @@ import { CheckoutPage } from "../pages/checkout/checkout";
   providers: [
     StatusBar,
     SplashScreen,
+    PayPal,
+    OneSignal,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

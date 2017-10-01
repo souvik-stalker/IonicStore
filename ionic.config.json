@@ -2,5 +2,7 @@
   "name": "wooIonic",
   "app_id": "622c4df6",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
