@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,ToastController,AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController, IonicPage,LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
+@IonicPage({})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -15,7 +16,8 @@ export class LoginPage {
               public http:Http,
               public toastCtrl:ToastController,
               public storage:Storage,
-              public alertCtrl:AlertController) {
+              public alertCtrl:AlertController,
+              public loadingCtrl:LoadingController) {
     this.username="";
     this.password="";
   }
@@ -24,9 +26,16 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
   public login():void{
+
+     let loader=this.loadingCtrl.create({
+       content:"Please wait..."
+     });
+
+     loader.present().then(()=>{
       this.http.get('http://souvikboss.000webhostapp.com/wordpress/api/auth/generate_auth_cookie/?insecure=cool&username='+this.username+'&password='+this.password)
       .subscribe((res)=>{
         let response=res.json();
+        loader.dismiss();
         if(response.error){
           this.toastCtrl.create({
             message:response.error,
@@ -54,5 +63,7 @@ export class LoginPage {
           })
 
       });
+     })
+      
   }
 }

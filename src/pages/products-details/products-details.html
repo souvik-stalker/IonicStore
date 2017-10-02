@@ -11,7 +11,10 @@
 <ion-content>
 
   <ion-fab right top edge (click)="openCart()">
-    <button ion-fab color="danger"><ion-icon name="cart"></ion-icon></button>
+    <button ion-fab clear id="notification-button" color="light"><ion-icon name="cart">
+      <ion-badge id="notifications-badge">{{totalCount}}</ion-badge>
+    </ion-icon>
+  </button>
   </ion-fab>
   <ion-card no-padding>
       <ion-slides autoplay="3000" pager>
@@ -21,6 +24,10 @@
         </ion-slides>
 
     <ion-card-content>
+        <ion-card-title>
+        Share With : &nbsp;
+        <button  (click)="shareFacebook(product)"> <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon></button>
+      </ion-card-title>
       <ion-card-title>
         {{product.title}} &nbsp;
         <ion-chip *ngFor="let cat of product.categories" style="margin-left:5px;">

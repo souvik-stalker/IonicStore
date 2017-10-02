@@ -1,12 +1,9 @@
 import { Component,ViewChild } from '@angular/core';
-import { NavController, NavParams,ModalController } from 'ionic-angular';
-import { HomePage } from "../home/home";
+import { IonicPage,NavController, NavParams,ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import * as WC from 'woocommerce-api';
-import { ProductsByCategoryPage } from "../products-by-category/products-by-category";
-import { SignupPage } from "../signup/signup";
-import { LoginPage } from "../login/login";
 import { CartPage } from "../cart/cart";
+@IonicPage({})
 @Component({
   selector: 'page-menu',
   templateUrl: 'menu.html',
@@ -19,7 +16,7 @@ export class Menu {
   user:any;
   @ViewChild('content') childNavCtrl : NavController;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage:Storage,public modalCtrl: ModalController) {
-    this.HomePage = HomePage;
+    this.HomePage = 'HomePage';
     this.categories=[];
    /* this.WooCommerce =WC({
       url:"http://localhost/udemy/wordpress",
@@ -80,18 +77,18 @@ export class Menu {
     })
   }
   openCategoryPage(category){
-    this.childNavCtrl.setRoot(ProductsByCategoryPage,{'category':category});
+    this.childNavCtrl.setRoot('ProductsByCategoryPage',{'category':category});
   }
   backToHome(){
-    this.childNavCtrl.setRoot(HomePage);
+    this.childNavCtrl.setRoot('HomePage');
   }
 
   openPage(pageName:string){
     if(pageName=='signup'){
-      this.navCtrl.push(SignupPage);
+      this.navCtrl.push('SignupPage');
     }
     else if(pageName=='login'){
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.push('LoginPage');
     }
     else if(pageName=='logout'){
       this.storage.remove('userLoginInfo').then(()=>{

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,ToastController,LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController, IonicPage } from 'ionic-angular';
 import * as WC from 'woocommerce-api';
-import { ProductsDetailsPage } from "../products-details/products-details";
+@IonicPage({})
 @Component({
   selector: 'page-products-by-category',
   templateUrl: 'products-by-category.html',
@@ -71,6 +71,6 @@ export class ProductsByCategoryPage {
   });
   }
   productDetail(product){
-    this.navCtrl.push(ProductsDetailsPage,{'product':product});
+    this.navCtrl.push('ProductsDetailsPage',{'product':product});
 }
 }

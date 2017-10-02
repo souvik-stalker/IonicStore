@@ -3,31 +3,18 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { Menu } from '../pages/menu/menu';
-import { ProductsByCategoryPage } from '../pages/products-by-category/products-by-category';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ProductsDetailsPage } from "../pages/products-details/products-details";
 import { IonicStorageModule } from '@ionic/storage';
 import { CartPage } from "../pages/cart/cart";
-import { SignupPage } from "../pages/signup/signup";
-import { LoginPage } from "../pages/login/login";
 import { HttpModule } from '@angular/http';
-import { CheckoutPage } from "../pages/checkout/checkout";
 import { PayPal } from '@ionic-native/paypal';
 import { OneSignal } from '@ionic-native/onesignal';
+import { SocialSharing } from '@ionic-native/social-sharing' ;
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    Menu,
-    ProductsByCategoryPage,
-    ProductsDetailsPage,
     CartPage,
-    SignupPage,
-    LoginPage,
-    CheckoutPage
   ],
   imports: [
     BrowserModule,
@@ -38,20 +25,14 @@ import { OneSignal } from '@ionic-native/onesignal';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    Menu,
-    ProductsByCategoryPage,
-    ProductsDetailsPage,
     CartPage,
-    SignupPage,
-    LoginPage,
-    CheckoutPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     PayPal,
     OneSignal,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
